@@ -1,0 +1,268 @@
+---
+title: "TESTE DA MEDIANA"
+subtitle: "UMA PERSPECTIVA VEROSSIMILHANCISTA"
+author: 
+  - "Esley Caminhas Ferreira"
+  - "\nRenan Carlos da Silva"
+format: revealjs
+editor: visual
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+## Introdução
+
+O **teste da mediana** é um teste não paramétrico para comparar medianas de dois grupos indepentes, util em casos com quando são violadas suposições de normalidade, ou há presença de *outliers*, ou ainda em pequenas amostras.
+
+Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global como um modelo binomial.
+
+## Definição Formal da Verossimilhança
+
+Considere dois grupos independentes $A$ e $B$ com observações:
+
+-   Grupo A: $Y_{A,1}, \dots, Y_{A,n_A}$
+
+    \newline
+
+-   Grupo B: $Y_{B,1}, \dots, Y_{B,n_B}$
+
+Para cada grupo $k \in \{A, B\}$, definimos:
+
+```{=tex}
+\begin{align*}
+    p_k &= P(Y_k > \theta) \\
+    \gamma_k &= P(Y_k = \theta) \\
+    1 - p_k - \gamma_k &= P(Y_k < \theta)
+\end{align*}
+```
+onde $\theta$ é a mediana global dos dados combinados.
+
+## Hipóteses
+
+Hipóteses:
+
+-   $H_0: \theta_A = \theta_B$ (As medianas populacionais são iguais)
+
+-   $H_1: \theta_A \neq \theta_B$
+
+Isto é, sob $H_0$ temos:
+
+$p_A = p_B = p = {N-m \over 2N}$,
+
+onde $m$ é o número de observações onde $Y = \theta$
+
+## Desenvolvendo a verossimilhança
+
+Para cada observação $Y_{k,i}$, a contribuição para a verossimilhança é
+
+$L_{k,i}(p_k, \gamma_k) = p_k {I(Y_{k,i} > \theta)} \cdot \gamma_k {I(Y_{k,i} = \theta)} \cdot (1-p_k-\gamma_k) {I(Y_{k,i} < \theta)}$
+
+\newline
+
+\newline
+
+Para o grupo $k$:
+
+$L_k(p_k, \gamma_k) = \prod_{i=1}^{n_k} L_{k,i} = p_k^{a_k} \cdot \gamma_k^{c_k} \cdot (1-p_k-\gamma_k)^{b_k}$
+
+## Desenvolvendo a verossimilhança
+
+onde:
+
+```{=tex}
+\begin{align*}
+    a_k &= \sum_{i=1}^{n_k} I(Y_{k,i} > M) \\
+    c_k &= \sum_{i=1}^{n_k} I(Y_{k,i} = M) \\
+    b_k &= \sum_{i=1}^{n_k} I(Y_{k,i} < M)
+\end{align*}
+```
+## Verossimilhança Conjunta
+
+$L(p_A, p_B, \gamma_A, \gamma_B) = L_A(p_A, \gamma_A) \times L_B(p_B, \gamma_B)$
+
+\newline
+
+**EMV:** Com 4 parâmetros, teríamos certo trabalho para encontrar os estimadores de máxima verossimilhança. Após alguns cálculos, obtemos os estimadores que são intuitivos, isto é:
+
+$$
+\hat{p}_k = {a_k \over n_k}
+$$
+
+$$
+\hat{\gamma}_k = {c_k \over n_k}
+$$
+
+## EMV
+
+Sob $H_0$,
+
+$$
+\hat{p} = {a_A + a_B \over N}
+$$
+
+$$
+\hat{\gamma} = {c_A + c_B \over N}
+$$
+
+## Teste da Razão de Verossimilhanças
+
+$$
+\Lambda = -2ln \bigg({L_0(\hat{p}, \hat{\gamma}) \over L_1(\hat{p}_A, \hat{p}_B, \hat{\gamma}_A, \hat{\gamma}_B)} \bigg) \stackrel{a}{\sim} \chi_2^2
+$$
+
+Os graus de liberdade, nesse caso, são 2 porque é a diferença entre os 4 parâmetros que estimamos na verossimilhança irrestrita e os 2 que estimamos sob $H_0$.
+
+## Simplificando o teste
+
+Sabemos que, como temos em geral dados contínuos (geralmente discretizados, em muitos casos) e, à medida que $N \to \infty$, o seguinte resultado se aplica:
+
+$$
+\gamma \stackrel{a}{\approx} 0 
+$$
+
+Isso facilitará nosso procedimento, à medida que agora temos um caso binomial. Isto é: agora sem o termo $\gamma$, a verossimilhança conjunta se reduz a
+
+$$
+L(p_A, p_B) = L(p_A) \times L(p_B) 
+$$
+
+## Teste da razão de verossimilhanças
+
+Portanto, o teste da razão de verossimilhanças fica:
+
+$$
+\Lambda = -2ln \bigg({L_0(\hat{p}) \over L_1(\hat{p_A, \hat{p}_B})} \bigg)
+$$
+
+Sendo que
+
+$$
+\Lambda \stackrel{a}{\sim} \chi_1^2
+$$
+
+## Observação
+
+É importante notar que omitir $\gamma$ torna o estimador viesado, mas ele ainda é assintoticamente não viesado.
+
+Esta manipulação está em consonância com o teste tradicional, que ignora os valores que são iguais à mediana.
+
+## Exemplo prático
+
+Para um caso prático, vamos usar microdados do ENEM 2023, disponíveis no portal de [dados abertos](https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/enem) do gov.com.br.
+
+Neste exemplo, vamos considerar as médias das notas da prova de matemática por município, em 2 grupos de escolas: públicas e particulares.
+
+Consideramos apenas alunos que compareceram a todos os dias de prova e não tiveram nenhum problema com o resultado (como redação anulada ou eliminação da prova, por exemplo). Também desconsideramos as escolas federais.
+
+O objetivo é verificar se a nota média das escolas particulares é superior à das escolas públicas.
+
+## O conjunto de dados
+
+```{r, echo=FALSE}
+dados_enem <- read.csv("enem.csv", sep = ";")
+```
+
+```{r}
+dados_enem
+```
+
+```{r, echo=FALSE}
+mediana <- median(dados_enem$media_matematica)
+```
+
+```{r}
+cat("Mediana global = ", mediana)
+```
+
+## Tabela de contingência
+
+```{r, echo=FALSE}
+dados_enem <- dados_enem %>%
+  mutate(
+    acima_M <- ifelse(media_matematica > mediana, 1, 0),
+    igual_M <- ifelse(media_matematica == mediana, 1, 0)
+  )
+
+tabela <- dados_enem %>%
+  group_by(tipo_escola) %>%
+  summarise(
+    acima = sum(`acima_M <- ifelse(media_matematica > mediana, 1, 0)`),
+    abaixo = n() - acima - sum(`igual_M <- ifelse(media_matematica == mediana, 1, 0)`), # Ignoramos Y = Med
+    total = n()
+  )
+```
+
+```{r, echo=FALSE}
+# Filtrar para excluir Y = M e criar a tabela
+tabela_exclusao <- dados_enem %>%
+  filter(`igual_M <- ifelse(media_matematica == mediana, 1, 0)` == 0) %>%  # Remove observações Y = M
+  group_by(tipo_escola) %>%
+  summarise(
+    acima = sum(`acima_M <- ifelse(media_matematica > mediana, 1, 0)`),
+    abaixo = n() - acima,
+    total = n()
+  )
+```
+
+```{r, echo=FALSE}
+tabela <- tabela_exclusao
+```
+
+| **Tipo de Escola** | **Acima** | **Abaixo** | **Total** |
+|:------------------:|:---------:|:----------:|:---------:|
+|     Particular     |    15     |     4      |    19     |
+|      Pública       |    33     |     44     |    77     |
+|     **Total**      |    48     |     48     |  **96**   |
+
+## Estimadores de máxima verossimilhança
+
+```{r}
+# EMV sob H_1
+p_hat_particular <- tabela$acima[1] / tabela$total[1]
+p_hat_publica <- tabela$acima[2] / tabela$total[2]
+
+# EMV sob H_0
+p_hat_geral <- sum(tabela$acima) / sum(tabela$total)
+```
+
+|     **Estimador**      | **Estimativa** |
+|:----------------------:|:--------------:|
+| $\hat{p}_{particular}$ |     0.789      |
+|  $\hat{p}_{pública}$   |     0.428      |
+|   $\hat{p}_{global}$   |      0.5       |
+
+## Teste da razão de verossimilhanças
+
+```{r, echo=TRUE}
+# Log-verossimilhança sob H0
+log_L0 <- sum(tabela$acima) * log(p_hat_geral) + 
+  (sum(tabela$total) - sum(tabela$acima)) * log(1 - p_hat_geral)
+
+# Log-verossimilhança sob H1
+log_L1 <- tabela$acima[1] * log(p_hat_particular) + 
+  (tabela$total[1] - tabela$acima[1]) * log(1 - p_hat_particular) +
+  tabela$acima[2] * log(p_hat_publica) + 
+  (tabela$total[2] - tabela$acima[2]) * log(1 - p_hat_publica)
+```
+
+```{r, echo=TRUE}
+Lambda <- -2 * (log_L0 - log_L1)
+p_valor <- pchisq(Lambda, df = 1, lower.tail = FALSE)
+
+cat("Estatística do TRV =", round(Lambda, 4), "\np-valor =", round(p_valor, 4))
+
+```
+
+## Comparação com o teste tradicional
+
+```{r, echo=TRUE}
+teste_chi2 <- chisq.test(matrix(c(tabela$acima, tabela$abaixo), nrow = 2), correct = FALSE)
+print(teste_chi2)
+```
+
+| **Método** | **Estatística de Teste** | **P-valor** |
+|:----------:|:------------------------:|:-----------:|
+|    TRV     |          8.3596          |   0.0038    |
+|  $\chi^2$  |          7.9398          |   0.0048    |
