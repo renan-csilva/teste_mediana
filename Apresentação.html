@@ -8,7 +8,7 @@
 <link href="Apresentação_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="Apresentação_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="Apresentação_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.3.353">
 
   <meta name="author" content="Esley Caminhas Ferreira">
   <meta name="author" content="Renan Carlos da Silva">
@@ -410,8 +410,8 @@ Renan Carlos da Silva
 </section>
 <section id="introdução" class="slide level2">
 <h2>Introdução</h2>
-<p>O <strong>teste da mediana</strong> é um teste não paramétrico para comparar medianas de dois grupos indepentes, util em casos com quando são violadas suposições de normalidade, ou há presença de <em>outliers</em>, ou ainda em pequenas amostras.</p>
-<p>Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global como um modelo binomial.</p>
+<p>O <strong>teste da mediana</strong> é um teste não paramétrico para comparar medianas de dois grupos indepentes, útil para os casos em que são violadas as suposições de normalidade, há presença de <em>outliers</em> ou pequenas amostras.</p>
+<p>Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global utilizando o modelo binomial.</p>
 </section>
 <section id="definição-formal-da-verossimilhança" class="slide level2">
 <h2>Definição Formal da Verossimilhança</h2>
@@ -420,13 +420,14 @@ Renan Carlos da Silva
 <li><p>Grupo A: <span class="math inline">\(Y_{A,1}, \dots, Y_{A,n_A}\)</span></p></li>
 <li><p>Grupo B: <span class="math inline">\(Y_{B,1}, \dots, Y_{B,n_B}\)</span></p></li>
 </ul>
-<p>Para cada grupo <span class="math inline">\(k \in \{A, B\}\)</span>, definimos:</p>
-<span class="math display">\[\begin{align*}
+<p>Para cada grupo <span class="math inline">\(k\)</span>, <span class="math inline">\(k \in \{A, B\}\)</span>, definimos:</p>
+<p><span class="math display">\[
+\begin{align*}
     p_k &amp;= P(Y_k &gt; \theta) \\
     \gamma_k &amp;= P(Y_k = \theta) \\
     1 - p_k - \gamma_k &amp;= P(Y_k &lt; \theta)
-\end{align*}\]</span>
-<p>onde <span class="math inline">\(\theta\)</span> é a mediana global dos dados combinados.</p>
+\end{align*}
+\]</span> onde <span class="math inline">\(\theta\)</span> é a mediana global dos dados combinados.</p>
 </section>
 <section id="hipóteses" class="slide level2">
 <h2>Hipóteses</h2>
@@ -437,43 +438,44 @@ Renan Carlos da Silva
 </ul>
 <p>Isto é, sob <span class="math inline">\(H_0\)</span> temos:</p>
 <p><span class="math inline">\(p_A = p_B = p = {N-m \over 2N}\)</span>,</p>
-<p>onde <span class="math inline">\(m\)</span> é o número de observações onde <span class="math inline">\(Y = \theta\)</span></p>
+<p>onde <span class="math inline">\(m\)</span> é o número de observações onde <span class="math inline">\(Y = \theta\)</span> e <span class="math inline">\(N = n_A + n_B\)</span>.</p>
 </section>
 <section id="desenvolvendo-a-verossimilhança" class="slide level2">
 <h2>Desenvolvendo a verossimilhança</h2>
-<p>Para cada observação <span class="math inline">\(Y_{k,i}\)</span>, a contribuição para a verossimilhança é</p>
-<p><span class="math inline">\(L_{k,i}(p_k, \gamma_k) = p_k {I(Y_{k,i} &gt; \theta)} \cdot \gamma_k {I(Y_{k,i} = \theta)} \cdot (1-p_k-\gamma_k) {I(Y_{k,i} &lt; \theta)}\)</span></p>
+<p>Para cada observação <span class="math inline">\(Y_{k,i}\)</span>, a contribuição para a verossimilhança é:</p>
+<p><span class="math display">\[
+\begin{split}
+L_{k,i}(p_k, \gamma_k) = &amp; \ p_k \cdot I(Y_{k,i} &gt; \theta) \cdot \gamma_k \cdot I(Y_{k,i} = \theta) \cdot \\
+&amp; (1-p_k-\gamma_k) \cdot I(Y_{k,i} &lt; \theta)
+\end{split}
+\]</span></p>
 <p>Para o grupo <span class="math inline">\(k\)</span>:</p>
-<p><span class="math inline">\(L_k(p_k, \gamma_k) = \prod_{i=1}^{n_k} L_{k,i} = p_k^{a_k} \cdot \gamma_k^{c_k} \cdot (1-p_k-\gamma_k)^{b_k}\)</span></p>
+<p><span class="math inline">\(L_k(p_k, \gamma_k) = \prod_{i=1}^{n_k} L_{k,i} = (p_k)^{a_k} \cdot (\gamma_k)^{c_k} \cdot (1-p_k-\gamma_k)^{b_k}\)</span></p>
 </section>
 <section id="desenvolvendo-a-verossimilhança-1" class="slide level2">
-<h2>Desenvolvendo a verossimilhança</h2>
+<h2>Desenvolvendo a Verossimilhança</h2>
 <p>onde:</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
     a_k &amp;= \sum_{i=1}^{n_k} I(Y_{k,i} &gt; M) \\
     c_k &amp;= \sum_{i=1}^{n_k} I(Y_{k,i} = M) \\
     b_k &amp;= \sum_{i=1}^{n_k} I(Y_{k,i} &lt; M)
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 </section>
 <section id="verossimilhança-conjunta" class="slide level2">
 <h2>Verossimilhança Conjunta</h2>
-<p><span class="math inline">\(L(p_A, p_B, \gamma_A, \gamma_B) = L_A(p_A, \gamma_A) \times L_B(p_B, \gamma_B)\)</span></p>
+<p><span class="math display">\[L(p_A, p_B, \gamma_A, \gamma_B) = L_A(p_A, \gamma_A) \cdot L_B(p_B, \gamma_B)\]</span></p>
 <p><strong>EMV:</strong> Com 4 parâmetros, teríamos certo trabalho para encontrar os estimadores de máxima verossimilhança. Após alguns cálculos, obtemos os estimadores que são intuitivos, isto é:</p>
 <p><span class="math display">\[
-\hat{p}_k = {a_k \over n_k}
-\]</span></p>
-<p><span class="math display">\[
-\hat{\gamma}_k = {c_k \over n_k}
+\hat{p}_k = {a_k \over n_k} \quad \text{e} \quad \hat{\gamma}_k = {c_k \over n_k}
 \]</span></p>
 </section>
-<section id="emv" class="slide level2">
-<h2>EMV</h2>
-<p>Sob <span class="math inline">\(H_0\)</span>,</p>
+<section id="estimadores-de-máxima-verossimilhança" class="slide level2">
+<h2>Estimadores de Máxima Verossimilhança</h2>
+<p>Sob <span class="math inline">\(H_0\)</span>:</p>
 <p><span class="math display">\[
-\hat{p} = {a_A + a_B \over N}
-\]</span></p>
-<p><span class="math display">\[
-\hat{\gamma} = {c_A + c_B \over N}
+\hat{p} = {a_A + a_B \over N} \quad \text{e} \quad \hat{\gamma} = {c_A + c_B \over N}
 \]</span></p>
 </section>
 <section id="teste-da-razão-de-verossimilhanças" class="slide level2">
@@ -483,24 +485,24 @@ Renan Carlos da Silva
 \]</span></p>
 <p>Os graus de liberdade, nesse caso, são 2 porque é a diferença entre os 4 parâmetros que estimamos na verossimilhança irrestrita e os 2 que estimamos sob <span class="math inline">\(H_0\)</span>.</p>
 </section>
-<section id="simplificando-o-teste" class="slide level2">
-<h2>Simplificando o teste</h2>
+<section id="teste-da-razão-de-verossimilhanças-1" class="slide level2">
+<h2>Teste da Razão de Verossimilhanças</h2>
 <p>Sabemos que, como temos em geral dados contínuos (geralmente discretizados, em muitos casos) e, à medida que <span class="math inline">\(N \to \infty\)</span>, o seguinte resultado se aplica:</p>
 <p><span class="math display">\[
 \gamma \stackrel{a}{\approx} 0
 \]</span></p>
-<p>Isso facilitará nosso procedimento, à medida que agora temos um caso binomial. Isto é: agora sem o termo <span class="math inline">\(\gamma\)</span>, a verossimilhança conjunta se reduz a</p>
+<p>Isso facilitará nosso procedimento, à medida que agora temos um caso binomial. Isto é: agora sem o termo <span class="math inline">\(\gamma\)</span>, a verossimilhança conjunta se reduz a:</p>
 <p><span class="math display">\[
-L(p_A, p_B) = L(p_A) \times L(p_B)
+L(p_A, p_B) = L(p_A) \cdot L(p_B)
 \]</span></p>
 </section>
-<section id="teste-da-razão-de-verossimilhanças-1" class="slide level2">
-<h2>Teste da razão de verossimilhanças</h2>
+<section id="teste-da-razão-de-verossimilhanças-2" class="slide level2">
+<h2>Teste da Razão de Verossimilhanças</h2>
 <p>Portanto, o teste da razão de verossimilhanças fica:</p>
 <p><span class="math display">\[
-\Lambda = -2ln \bigg({L_0(\hat{p}) \over L_1(\hat{p_A, \hat{p}_B})} \bigg)
+\Lambda = -2ln \bigg({L_0(\hat{p}) \over L_1(\hat{p}_A, \hat{p}_B)}\bigg)
 \]</span></p>
-<p>Sendo que</p>
+<p>Sendo que:</p>
 <p><span class="math display">\[
 \Lambda \stackrel{a}{\sim} \chi_1^2
 \]</span></p>
@@ -518,117 +520,57 @@ L(p_A, p_B) = L(p_A) \times L(p_B)
 <p>O objetivo é verificar se a nota média das escolas particulares é superior à das escolas públicas.</p>
 </section>
 <section id="o-conjunto-de-dados" class="slide level2">
-<h2>O conjunto de dados</h2>
+<h2>O conjunto de Dados</h2>
+<p>Primeiras 5 observações:</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>   tipo_escola               municipio media_matematica
-1      Pública          Afonso Cláudio            507,6
-2      Pública      Água Doce do Norte            425,1
-3      Pública            Águia Branca            489,8
-4      Pública                  Alegre            454,5
-5      Pública          Alfredo Chaves            432,7
-6      Pública           Alto Rio Novo            447,4
-7      Pública                Anchieta            494,3
-8      Pública                  Apiacá            431,6
-9      Pública                 Aracruz            504,9
-10     Pública         Atílio Vivácqua            450,0
-11     Pública            Baixo Guandu            526,9
-12     Pública  Barra de São Francisco            470,4
-13     Pública           Boa Esperança            487,3
-14     Pública      Bom Jesus do Norte            403,5
-15     Pública               Brejetuba            420,2
-16     Pública Cachoeiro de Itapemirim            474,8
-17     Pública               Cariacica            473,9
-18     Pública                 Castelo            513,7
-19     Pública                Colatina            471,3
-20     Pública      Conceição da Barra            455,1
-21     Pública    Conceição do Castelo            519,6
-22     Pública  Divino de São Lourenço            467,7
-23     Pública        Domingos Martins            533,0
-24     Pública      Dores do Rio Preto            464,2
-25     Pública              Ecoporanga            474,4
-26     Pública                  Fundão            485,7
-27     Pública   Governador Lindenberg            480,8
-28     Pública                  Guaçuí            473,8
-29     Pública               Guarapari            476,4
-30     Pública                 Ibatiba            454,9
-31     Pública                 Ibiraçu            483,0
-32     Pública               Ibitirama            438,8
-33     Pública                  Iconha            465,7
-34     Pública                   Irupi            508,8
-35     Pública                Itaguaçu            447,0
-36     Pública              Itapemirim            463,0
-37     Pública                 Itarana            462,5
-38     Pública                    Iúna            489,7
-39     Pública                 Jaguaré            502,4
-40     Pública       Jerônimo Monteiro            386,3
-41     Pública              João Neiva            532,2
-42     Pública        Laranja da Terra            469,0
-43     Pública                Linhares            500,0
-44     Pública            Mantenópolis            485,3
-45     Pública              Marataízes            507,5
-46     Pública       Marechal Floriano            545,6
-47     Pública              Marilândia            464,0
-48     Pública           Mimoso do Sul            452,4
-49     Pública                Montanha            466,9
-50     Pública                Mucurici            431,7
-51     Pública            Muniz Freire            489,5
-52     Pública                   Muqui            482,1
-53     Pública            Nova Venécia            483,6
-54     Pública                  Pancas            447,4
-55     Pública           Pedro Canário            445,1
-56     Pública               Pinheiros            398,3
-57     Pública                   Piúma            482,9
-58     Pública              Ponto Belo            406,1
-59     Pública      Presidente Kennedy            465,7
-60     Pública             Rio Bananal            507,9
-61     Pública         Rio Novo do Sul            508,4
-62     Pública        Santa Leopoldina            380,7
-63     Pública   Santa Maria de Jetibá            527,3
-64     Pública            Santa Teresa            540,0
-65     Pública   São Domingos do Norte            378,1
-66     Pública    São Gabriel da Palha            509,0
-67     Pública     São José do Calçado            467,2
-68     Pública              São Mateus            478,0
-69     Pública      São Roque do Canaã            408,7
-70     Pública                   Serra            479,8
-71     Pública               Sooretama            460,4
-72     Pública             Vargem Alta            466,9
-73     Pública Venda Nova do Imigrante            478,3
-74     Pública                   Viana            475,5
-75     Pública              Vila Pavão            583,8
-76     Pública            Vila Valério            504,6
-77     Pública              Vila Velha            489,2
-78     Pública                 Vitória            499,2
-79  Particular                Anchieta            415,2
-80  Particular                 Aracruz            578,1
-81  Particular Cachoeiro de Itapemirim            589,7
-82  Particular               Cariacica            555,0
-83  Particular                 Castelo            563,0
-84  Particular                Colatina            585,6
-85  Particular                  Guaçuí            636,8
-86  Particular               Guarapari            568,2
-87  Particular                Linhares            573,0
-88  Particular              Marataízes            561,7
-89  Particular              Marilândia            302,7
-90  Particular   Santa Maria de Jetibá            384,3
-91  Particular            Santa Teresa            635,6
-92  Particular    São Gabriel da Palha            440,9
-93  Particular              São Mateus            598,5
-94  Particular                   Serra            594,0
-95  Particular Venda Nova do Imigrante            622,0
-96  Particular              Vila Velha            579,2
-97  Particular                 Vitória            628,9</code></pre>
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">tipo_escola</th>
+<th style="text-align: left;">municipio</th>
+<th style="text-align: left;">media_matematica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Afonso Cláudio</td>
+<td style="text-align: left;">507,6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Água Doce do Norte</td>
+<td style="text-align: left;">425,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Águia Branca</td>
+<td style="text-align: left;">489,8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Alegre</td>
+<td style="text-align: left;">454,5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Alfredo Chaves</td>
+<td style="text-align: left;">432,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Alto Rio Novo</td>
+<td style="text-align: left;">447,4</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Mediana global =  479,8</code></pre>
-</div>
-</div>
+<p>Mediana global = 479,8</p>
 </section>
 <section id="tabela-de-contingência" class="slide level2">
-<h2>Tabela de contingência</h2>
+<h2>Tabela de Contingência</h2>
 <table>
 <thead>
 <tr class="header">
@@ -660,8 +602,8 @@ L(p_A, p_B) = L(p_A) \times L(p_B)
 </tbody>
 </table>
 </section>
-<section id="estimadores-de-máxima-verossimilhança" class="slide level2">
-<h2>Estimadores de máxima verossimilhança</h2>
+<section id="estimadores-de-máxima-verossimilhança-1" class="slide level2">
+<h2>Estimadores de Máxima Verossimilhança</h2>
 <table>
 <thead>
 <tr class="header">
@@ -685,24 +627,24 @@ L(p_A, p_B) = L(p_A) \times L(p_B)
 </tbody>
 </table>
 </section>
-<section id="teste-da-razão-de-verossimilhanças-2" class="slide level2">
-<h2>Teste da razão de verossimilhanças</h2>
+<section id="teste-da-razão-de-verossimilhanças-3" class="slide level2">
+<h2>Teste da Razão de Verossimilhanças</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Log-verossimilhança sob H0</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>log_L0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(tabela<span class="sc">$</span>acima) <span class="sc">*</span> <span class="fu">log</span>(p_hat_geral) <span class="sc">+</span> </span>
-<span id="cb3-3"><a href="#cb3-3"></a>  (<span class="fu">sum</span>(tabela<span class="sc">$</span>total) <span class="sc">-</span> <span class="fu">sum</span>(tabela<span class="sc">$</span>acima)) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_geral)</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Log-verossimilhança sob H1</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>log_L1 <span class="ot">&lt;-</span> tabela<span class="sc">$</span>acima[<span class="dv">1</span>] <span class="sc">*</span> <span class="fu">log</span>(p_hat_particular) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7"></a>  (tabela<span class="sc">$</span>total[<span class="dv">1</span>] <span class="sc">-</span> tabela<span class="sc">$</span>acima[<span class="dv">1</span>]) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_particular) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  tabela<span class="sc">$</span>acima[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">log</span>(p_hat_publica) <span class="sc">+</span> </span>
-<span id="cb3-9"><a href="#cb3-9"></a>  (tabela<span class="sc">$</span>total[<span class="dv">2</span>] <span class="sc">-</span> tabela<span class="sc">$</span>acima[<span class="dv">2</span>]) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_publica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Log-verossimilhança sob H0</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>log_L0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(tabela<span class="sc">$</span>acima) <span class="sc">*</span> <span class="fu">log</span>(p_hat_geral) <span class="sc">+</span> </span>
+<span id="cb1-3"><a href="#cb1-3"></a>  (<span class="fu">sum</span>(tabela<span class="sc">$</span>total) <span class="sc">-</span> <span class="fu">sum</span>(tabela<span class="sc">$</span>acima)) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_geral)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Log-verossimilhança sob H1</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>log_L1 <span class="ot">&lt;-</span> tabela<span class="sc">$</span>acima[<span class="dv">1</span>] <span class="sc">*</span> <span class="fu">log</span>(p_hat_particular) <span class="sc">+</span> </span>
+<span id="cb1-7"><a href="#cb1-7"></a>  (tabela<span class="sc">$</span>total[<span class="dv">1</span>] <span class="sc">-</span> tabela<span class="sc">$</span>acima[<span class="dv">1</span>]) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_particular) <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  tabela<span class="sc">$</span>acima[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">log</span>(p_hat_publica) <span class="sc">+</span> </span>
+<span id="cb1-9"><a href="#cb1-9"></a>  (tabela<span class="sc">$</span>total[<span class="dv">2</span>] <span class="sc">-</span> tabela<span class="sc">$</span>acima[<span class="dv">2</span>]) <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">-</span> p_hat_publica)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>Lambda <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> (log_L0 <span class="sc">-</span> log_L1)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>p_valor <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(Lambda, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">cat</span>(<span class="st">"Estatística do TRV ="</span>, <span class="fu">round</span>(Lambda, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">p-valor ="</span>, <span class="fu">round</span>(p_valor, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>Lambda <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> (log_L0 <span class="sc">-</span> log_L1)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>p_valor <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(Lambda, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">cat</span>(<span class="st">"Estatística do TRV ="</span>, <span class="fu">round</span>(Lambda, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">p-valor ="</span>, <span class="fu">round</span>(p_valor, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Estatística do TRV = 8.3596 
 p-valor = 0.0038</code></pre>
@@ -712,8 +654,8 @@ p-valor = 0.0038</code></pre>
 <section id="comparação-com-o-teste-tradicional" class="slide level2">
 <h2>Comparação com o teste tradicional</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>teste_chi2 <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(tabela<span class="sc">$</span>acima, tabela<span class="sc">$</span>abaixo), <span class="at">nrow =</span> <span class="dv">2</span>), <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">print</span>(teste_chi2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>teste_chi2 <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(tabela<span class="sc">$</span>acima, tabela<span class="sc">$</span>abaixo), <span class="at">nrow =</span> <span class="dv">2</span>), <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">print</span>(teste_chi2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test

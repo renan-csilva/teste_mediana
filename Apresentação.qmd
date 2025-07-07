@@ -14,9 +14,9 @@ library(tidyverse)
 
 ## Introdução
 
-O **teste da mediana** é um teste não paramétrico para comparar medianas de dois grupos indepentes, util em casos com quando são violadas suposições de normalidade, ou há presença de *outliers*, ou ainda em pequenas amostras.
+O **teste da mediana** é um teste não paramétrico para comparar medianas de dois grupos indepentes, útil para os casos em que são violadas as suposições de normalidade, há presença de *outliers* ou pequenas amostras.
 
-Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global como um modelo binomial.
+Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global utilizando o modelo binomial.
 
 ## Definição Formal da Verossimilhança
 
@@ -28,15 +28,15 @@ Considere dois grupos independentes $A$ e $B$ com observações:
 
 -   Grupo B: $Y_{B,1}, \dots, Y_{B,n_B}$
 
-Para cada grupo $k \in \{A, B\}$, definimos:
+Para cada grupo $k$, $k \in \{A, B\}$, definimos:
 
-```{=tex}
+$$
 \begin{align*}
     p_k &= P(Y_k > \theta) \\
     \gamma_k &= P(Y_k = \theta) \\
     1 - p_k - \gamma_k &= P(Y_k < \theta)
 \end{align*}
-```
+$$
 onde $\theta$ é a mediana global dos dados combinados.
 
 ## Hipóteses
@@ -51,59 +51,55 @@ Isto é, sob $H_0$ temos:
 
 $p_A = p_B = p = {N-m \over 2N}$,
 
-onde $m$ é o número de observações onde $Y = \theta$
+onde $m$ é o número de observações onde $Y = \theta$ e $N = n_A + n_B$.
 
 ## Desenvolvendo a verossimilhança
 
-Para cada observação $Y_{k,i}$, a contribuição para a verossimilhança é
+Para cada observação $Y_{k,i}$, a contribuição para a verossimilhança é:
 
-$L_{k,i}(p_k, \gamma_k) = p_k {I(Y_{k,i} > \theta)} \cdot \gamma_k {I(Y_{k,i} = \theta)} \cdot (1-p_k-\gamma_k) {I(Y_{k,i} < \theta)}$
-
-\newline
+$$
+\begin{split}
+L_{k,i}(p_k, \gamma_k) = & \ p_k \cdot I(Y_{k,i} > \theta) \cdot \gamma_k \cdot I(Y_{k,i} = \theta) \cdot \\
+& (1-p_k-\gamma_k) \cdot I(Y_{k,i} < \theta)
+\end{split}
+$$
 
 \newline
 
 Para o grupo $k$:
 
-$L_k(p_k, \gamma_k) = \prod_{i=1}^{n_k} L_{k,i} = p_k^{a_k} \cdot \gamma_k^{c_k} \cdot (1-p_k-\gamma_k)^{b_k}$
+$L_k(p_k, \gamma_k) = \prod_{i=1}^{n_k} L_{k,i} = (p_k)^{a_k} \cdot (\gamma_k)^{c_k} \cdot (1-p_k-\gamma_k)^{b_k}$
 
-## Desenvolvendo a verossimilhança
+## Desenvolvendo a Verossimilhança
 
 onde:
 
-```{=tex}
+$$
 \begin{align*}
     a_k &= \sum_{i=1}^{n_k} I(Y_{k,i} > M) \\
     c_k &= \sum_{i=1}^{n_k} I(Y_{k,i} = M) \\
     b_k &= \sum_{i=1}^{n_k} I(Y_{k,i} < M)
 \end{align*}
-```
+$$
+
 ## Verossimilhança Conjunta
 
-$L(p_A, p_B, \gamma_A, \gamma_B) = L_A(p_A, \gamma_A) \times L_B(p_B, \gamma_B)$
+$$L(p_A, p_B, \gamma_A, \gamma_B) = L_A(p_A, \gamma_A) \cdot L_B(p_B, \gamma_B)$$
 
 \newline
 
 **EMV:** Com 4 parâmetros, teríamos certo trabalho para encontrar os estimadores de máxima verossimilhança. Após alguns cálculos, obtemos os estimadores que são intuitivos, isto é:
 
 $$
-\hat{p}_k = {a_k \over n_k}
+\hat{p}_k = {a_k \over n_k} \quad \text{e} \quad \hat{\gamma}_k = {c_k \over n_k}
 $$
 
-$$
-\hat{\gamma}_k = {c_k \over n_k}
-$$
+## Estimadores de Máxima Verossimilhança
 
-## EMV
-
-Sob $H_0$,
+Sob $H_0$:
 
 $$
-\hat{p} = {a_A + a_B \over N}
-$$
-
-$$
-\hat{\gamma} = {c_A + c_B \over N}
+\hat{p} = {a_A + a_B \over N} \quad \text{e} \quad \hat{\gamma} = {c_A + c_B \over N}
 $$
 
 ## Teste da Razão de Verossimilhanças
@@ -114,7 +110,7 @@ $$
 
 Os graus de liberdade, nesse caso, são 2 porque é a diferença entre os 4 parâmetros que estimamos na verossimilhança irrestrita e os 2 que estimamos sob $H_0$.
 
-## Simplificando o teste
+## Teste da Razão de Verossimilhanças
 
 Sabemos que, como temos em geral dados contínuos (geralmente discretizados, em muitos casos) e, à medida que $N \to \infty$, o seguinte resultado se aplica:
 
@@ -122,21 +118,21 @@ $$
 \gamma \stackrel{a}{\approx} 0 
 $$
 
-Isso facilitará nosso procedimento, à medida que agora temos um caso binomial. Isto é: agora sem o termo $\gamma$, a verossimilhança conjunta se reduz a
+Isso facilitará nosso procedimento, à medida que agora temos um caso binomial. Isto é: agora sem o termo $\gamma$, a verossimilhança conjunta se reduz a:
 
 $$
-L(p_A, p_B) = L(p_A) \times L(p_B) 
+L(p_A, p_B) = L(p_A) \cdot L(p_B) 
 $$
 
-## Teste da razão de verossimilhanças
+## Teste da Razão de Verossimilhanças
 
 Portanto, o teste da razão de verossimilhanças fica:
 
 $$
-\Lambda = -2ln \bigg({L_0(\hat{p}) \over L_1(\hat{p_A, \hat{p}_B})} \bigg)
+\Lambda = -2ln \bigg({L_0(\hat{p}) \over L_1(\hat{p}_A, \hat{p}_B)}\bigg)
 $$
 
-Sendo que
+Sendo que:
 
 $$
 \Lambda \stackrel{a}{\sim} \chi_1^2
@@ -158,14 +154,15 @@ Consideramos apenas alunos que compareceram a todos os dias de prova e não tive
 
 O objetivo é verificar se a nota média das escolas particulares é superior à das escolas públicas.
 
-## O conjunto de dados
+## O conjunto de Dados
 
 ```{r, echo=FALSE}
 dados_enem <- read.csv("enem.csv", sep = ";")
 ```
 
+Primeiras 5 observações: 
 ```{r}
-dados_enem
+knitr::kable(head(dados_enem))
 ```
 
 ```{r, echo=FALSE}
@@ -173,10 +170,12 @@ mediana <- median(dados_enem$media_matematica)
 ```
 
 ```{r}
-cat("Mediana global = ", mediana)
+# cat("Mediana global = ", mediana)
 ```
 
-## Tabela de contingência
+Mediana global = `r mediana`
+
+## Tabela de Contingência
 
 ```{r, echo=FALSE}
 dados_enem <- dados_enem %>%
@@ -216,7 +215,7 @@ tabela <- tabela_exclusao
 |      Pública       |    33     |     44     |    77     |
 |     **Total**      |    48     |     48     |  **96**   |
 
-## Estimadores de máxima verossimilhança
+## Estimadores de Máxima Verossimilhança
 
 ```{r}
 # EMV sob H_1
@@ -233,7 +232,7 @@ p_hat_geral <- sum(tabela$acima) / sum(tabela$total)
 |  $\hat{p}_{pública}$   |     0.428      |
 |   $\hat{p}_{global}$   |      0.5       |
 
-## Teste da razão de verossimilhanças
+## Teste da Razão de Verossimilhanças
 
 ```{r, echo=TRUE}
 # Log-verossimilhança sob H0
