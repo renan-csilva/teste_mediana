@@ -18,6 +18,16 @@ O **teste da mediana** é um teste não paramétrico para comparar medianas de d
 
 Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global utilizando o modelo binomial.
 
+## Artigos de inspiração
+
+Nos baseamos sobretudo em 2 artigos:
+
+-   "*On the Asymptotic Efficiency of Certain Nonparametric Two-Sample Tests*" (Mood, 1950);
+
+-   "*The Large-Sample Distribution of the Likelihood Ratio for Testing Composite Hypoteses*" (Wilks, 1938).
+
+O primeiro formaliza o teste da mediana como um método não paramétrico, estabelecendo suas propriedades assintóticas, enquanto o último fala sobre a equivalência assintótitca entre o teste da razão de verossimilhanças e a distribuição $\chi^2$.
+
 ## Definição Formal da Verossimilhança
 
 Considere dois grupos independentes $A$ e $B$ com observações:
@@ -36,8 +46,7 @@ $$
     \gamma_k &= P(Y_k = \theta) \\
     1 - p_k - \gamma_k &= P(Y_k < \theta)
 \end{align*}
-$$
-onde $\theta$ é a mediana global dos dados combinados.
+$$ onde $\theta$ é a mediana global dos dados combinados.
 
 ## Hipóteses
 
@@ -160,9 +169,10 @@ O objetivo é verificar se a nota média das escolas particulares é superior à
 dados_enem <- read.csv("enem.csv", sep = ";")
 ```
 
-Primeiras 5 observações: 
+Primeiras 5 observações:
+
 ```{r}
-knitr::kable(head(dados_enem))
+knitr::kable(dados_enem)
 ```
 
 ```{r, echo=FALSE}

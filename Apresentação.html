@@ -8,7 +8,7 @@
 <link href="Apresentação_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="Apresentação_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="Apresentação_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.353">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Esley Caminhas Ferreira">
   <meta name="author" content="Renan Carlos da Silva">
@@ -413,6 +413,15 @@ Renan Carlos da Silva
 <p>O <strong>teste da mediana</strong> é um teste não paramétrico para comparar medianas de dois grupos indepentes, útil para os casos em que são violadas as suposições de normalidade, há presença de <em>outliers</em> ou pequenas amostras.</p>
 <p>Nesta apresentação, nosso objetivo é desenvolver o teste a partir de uma abordagem focada na verossimilhança, modelando a probabilidade de uma observação estar acima da mediana global utilizando o modelo binomial.</p>
 </section>
+<section id="artigos-de-inspiração" class="slide level2">
+<h2>Artigos de inspiração</h2>
+<p>Nos baseamos sobretudo em 2 artigos:</p>
+<ul>
+<li><p>“<em>On the Asymptotic Efficiency of Certain Nonparametric Two-Sample Tests</em>” (Mood, 1950);</p></li>
+<li><p>“<em>The Large-Sample Distribution of the Likelihood Ratio for Testing Composite Hypoteses</em>” (Wilks, 1938).</p></li>
+</ul>
+<p>O primeiro formaliza o teste da mediana como um método não paramétrico, estabelecendo suas propriedades assintóticas, enquanto o último fala sobre a equivalência assintótitca entre o teste da razão de verossimilhanças e a distribuição <span class="math inline">\(\chi^2\)</span>.</p>
+</section>
 <section id="definição-formal-da-verossimilhança" class="slide level2">
 <h2>Definição Formal da Verossimilhança</h2>
 <p>Considere dois grupos independentes <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> com observações:</p>
@@ -562,6 +571,461 @@ L(p_A, p_B) = L(p_A) \cdot L(p_B)
 <td style="text-align: left;">Pública</td>
 <td style="text-align: left;">Alto Rio Novo</td>
 <td style="text-align: left;">447,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Anchieta</td>
+<td style="text-align: left;">494,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Apiacá</td>
+<td style="text-align: left;">431,6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Aracruz</td>
+<td style="text-align: left;">504,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Atílio Vivácqua</td>
+<td style="text-align: left;">450,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Baixo Guandu</td>
+<td style="text-align: left;">526,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Barra de São Francisco</td>
+<td style="text-align: left;">470,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Boa Esperança</td>
+<td style="text-align: left;">487,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Bom Jesus do Norte</td>
+<td style="text-align: left;">403,5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Brejetuba</td>
+<td style="text-align: left;">420,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Cachoeiro de Itapemirim</td>
+<td style="text-align: left;">474,8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Cariacica</td>
+<td style="text-align: left;">473,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Castelo</td>
+<td style="text-align: left;">513,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Colatina</td>
+<td style="text-align: left;">471,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Conceição da Barra</td>
+<td style="text-align: left;">455,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Conceição do Castelo</td>
+<td style="text-align: left;">519,6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Divino de São Lourenço</td>
+<td style="text-align: left;">467,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Domingos Martins</td>
+<td style="text-align: left;">533,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Dores do Rio Preto</td>
+<td style="text-align: left;">464,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Ecoporanga</td>
+<td style="text-align: left;">474,4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Fundão</td>
+<td style="text-align: left;">485,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Governador Lindenberg</td>
+<td style="text-align: left;">480,8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Guaçuí</td>
+<td style="text-align: left;">473,8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Guarapari</td>
+<td style="text-align: left;">476,4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Ibatiba</td>
+<td style="text-align: left;">454,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Ibiraçu</td>
+<td style="text-align: left;">483,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Ibitirama</td>
+<td style="text-align: left;">438,8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Iconha</td>
+<td style="text-align: left;">465,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Irupi</td>
+<td style="text-align: left;">508,8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Itaguaçu</td>
+<td style="text-align: left;">447,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Itapemirim</td>
+<td style="text-align: left;">463,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Itarana</td>
+<td style="text-align: left;">462,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Iúna</td>
+<td style="text-align: left;">489,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Jaguaré</td>
+<td style="text-align: left;">502,4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Jerônimo Monteiro</td>
+<td style="text-align: left;">386,3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">João Neiva</td>
+<td style="text-align: left;">532,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Laranja da Terra</td>
+<td style="text-align: left;">469,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Linhares</td>
+<td style="text-align: left;">500,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Mantenópolis</td>
+<td style="text-align: left;">485,3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Marataízes</td>
+<td style="text-align: left;">507,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Marechal Floriano</td>
+<td style="text-align: left;">545,6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Marilândia</td>
+<td style="text-align: left;">464,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Mimoso do Sul</td>
+<td style="text-align: left;">452,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Montanha</td>
+<td style="text-align: left;">466,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Mucurici</td>
+<td style="text-align: left;">431,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Muniz Freire</td>
+<td style="text-align: left;">489,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Muqui</td>
+<td style="text-align: left;">482,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Nova Venécia</td>
+<td style="text-align: left;">483,6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Pancas</td>
+<td style="text-align: left;">447,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Pedro Canário</td>
+<td style="text-align: left;">445,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Pinheiros</td>
+<td style="text-align: left;">398,3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Piúma</td>
+<td style="text-align: left;">482,9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Ponto Belo</td>
+<td style="text-align: left;">406,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Presidente Kennedy</td>
+<td style="text-align: left;">465,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Rio Bananal</td>
+<td style="text-align: left;">507,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Rio Novo do Sul</td>
+<td style="text-align: left;">508,4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Santa Leopoldina</td>
+<td style="text-align: left;">380,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Santa Maria de Jetibá</td>
+<td style="text-align: left;">527,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Santa Teresa</td>
+<td style="text-align: left;">540,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">São Domingos do Norte</td>
+<td style="text-align: left;">378,1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">São Gabriel da Palha</td>
+<td style="text-align: left;">509,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">São José do Calçado</td>
+<td style="text-align: left;">467,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">São Mateus</td>
+<td style="text-align: left;">478,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">São Roque do Canaã</td>
+<td style="text-align: left;">408,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Serra</td>
+<td style="text-align: left;">479,8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Sooretama</td>
+<td style="text-align: left;">460,4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Vargem Alta</td>
+<td style="text-align: left;">466,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Venda Nova do Imigrante</td>
+<td style="text-align: left;">478,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Viana</td>
+<td style="text-align: left;">475,5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Vila Pavão</td>
+<td style="text-align: left;">583,8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Vila Valério</td>
+<td style="text-align: left;">504,6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Vila Velha</td>
+<td style="text-align: left;">489,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pública</td>
+<td style="text-align: left;">Vitória</td>
+<td style="text-align: left;">499,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Anchieta</td>
+<td style="text-align: left;">415,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Aracruz</td>
+<td style="text-align: left;">578,1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Cachoeiro de Itapemirim</td>
+<td style="text-align: left;">589,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Cariacica</td>
+<td style="text-align: left;">555,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Castelo</td>
+<td style="text-align: left;">563,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Colatina</td>
+<td style="text-align: left;">585,6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Guaçuí</td>
+<td style="text-align: left;">636,8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Guarapari</td>
+<td style="text-align: left;">568,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Linhares</td>
+<td style="text-align: left;">573,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Marataízes</td>
+<td style="text-align: left;">561,7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Marilândia</td>
+<td style="text-align: left;">302,7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Santa Maria de Jetibá</td>
+<td style="text-align: left;">384,3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Santa Teresa</td>
+<td style="text-align: left;">635,6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">São Gabriel da Palha</td>
+<td style="text-align: left;">440,9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">São Mateus</td>
+<td style="text-align: left;">598,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Serra</td>
+<td style="text-align: left;">594,0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Venda Nova do Imigrante</td>
+<td style="text-align: left;">622,0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Vila Velha</td>
+<td style="text-align: left;">579,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Particular</td>
+<td style="text-align: left;">Vitória</td>
+<td style="text-align: left;">628,9</td>
 </tr>
 </tbody>
 </table>
